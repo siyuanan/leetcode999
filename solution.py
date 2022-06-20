@@ -53,23 +53,29 @@ class Solution:
 
     # 658
     def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
-        if len(arr) == k: 
+        # if k equals the array length
+	if len(arr) == k: 
             return arr
 
-        # binary search to get closest element
+        # binary search to get 2 closest elements
         left = 0
-        right = len(arr)
+        right = len(arr) - 1
         while left < right - 1: 
-            print(arr[left: right + 1])
+            # print(arr[left: right + 1])
             mid = (left + right) // 2
             if arr[mid] == x:
                 left = mid
                 break
+	    # not mid + 1, cuz it may jump over the right range
             elif arr[mid] > x: 
-                right = mid
+                right = max(left + 1, mid)
             else: 
-                left = mid + 1
-
+                left = min(mid, right - 1)
+	
+	# compare the two values to decide which one is the closest
+        if abs(arr[right] - x) < abs(arr[left] - x): 
+            left = right
+            
         # left will be the index of closest value now
         # expand from left
         right = left
