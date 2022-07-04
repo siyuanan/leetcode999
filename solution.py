@@ -93,62 +93,50 @@ class Solution:
 
     # 34
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        # helper function to find the first occurance 
         def searchFirst(nums, target): 
             if len(nums) == 0: 
                 return -1
-            if len(nums) == 1: 
-                return int(nums[0] == target) - 1
+
             left = 0
             right = len(nums) - 1
-
-            while left <= right: 
+            while left < right: 
                 mid = (left + right) // 2
-                if nums[mid] == target:
-                    if nums[mid - 1] != target: 
+                if (nums[mid] == target): 
+                    if (mid == 0) | (nums[mid-1] != target): 
                         return mid
-                    elif mid == left: 
-                        return mid
-                    else: 
-                        right = mid - 1
-                elif nums[mid] > target: 
-                    right = mid - 1
-                else: 
+                if nums[mid] < target: 
                     left = mid + 1
-            return -1
-        
+                else: 
+                    right = mid - 1
+
+            if nums[left] == target: 
+                return left
+            else: 
+                return -1
+
         def searchLast(nums, target): 
             if len(nums) == 0: 
                 return -1
-            if len(nums) == 1: 
-                return int(nums[0] == target) - 1
             left = 0
             right = len(nums) - 1
-
             while left < right: 
                 mid = (left + right) // 2
-                if (nums[mid] == target):
-                    if nums[mid + 1] != target:
-                        return mid
-                    elif (mid == right - 1): 
-                        return right
-                    else: 
-                        left = mid + 1
-                elif nums[mid] < target: 
-                    left = mid + 1
-                else: 
+                if (nums[mid] == target) & (nums[mid+1] != target): 
+                    return mid
+                if nums[mid] > target: 
                     right = mid - 1
-            if (left == right) and (nums[left] == target): 
+                else: 
+                    left = mid + 1
+
+            if nums[left] == target: 
                 return left
-            return -1
-        
+            else: 
+                return -1
+            
         i = searchFirst(nums, target)
         if i == -1: 
             return [-1, -1]
         else: 
             return [i, searchLast(nums, target)]
-
-
-
 
 
