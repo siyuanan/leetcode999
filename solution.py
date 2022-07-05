@@ -161,3 +161,22 @@ class Solution:
             return letters[0]
         else: 
             return letters[left]
+
+    # 702
+    def search(self, reader: 'ArrayReader', target: int) -> int:
+        # find the right boundary
+        left = 0
+        right = 1
+        while reader.get(right) < target:
+            right = right * 2
+            
+        while left <= right:
+            mid = (left + right) // 2
+            if reader.get(mid) == target:
+                return mid
+            elif reader.get(mid) > target:
+                right = mid - 1
+            else:
+                left = mid + 1
+                
+        return -1
