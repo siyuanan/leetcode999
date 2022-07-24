@@ -44,3 +44,14 @@ class Solution:
         
         return M[n][m]
     
+    # 121
+    def maxProfit(self, prices: List[int]) -> int:
+        profit = 0
+        minPrice = 10**5
+        for i in range(len(prices)): 
+            if prices[i] < minPrice: 
+                minPrice = prices[i]
+            elif prices[i] - minPrice > profit:
+                profit = prices[i] - minPrice
+        return profit
+    
