@@ -19,5 +19,28 @@ class Solution:
             x2 = x3
         return x3
     
-    # 42
+    # 72 min edit distance
+    def minDistance(self, word1: str, word2: str) -> int:
+        m = len(word1)
+        n = len(word2)
+        
+        if m * n == 0:
+            return m + n
+        
+        # dp matrix initialize
+        M = [[0] * (m + 1) for x in range(n + 1)]
+        for j in range(m + 1): 
+            M[0][j] = j
+        for i in range(n + 1): 
+            M[i][0] = i
+            
+        # fill dp matrix
+        for i in range(1, n+1): 
+            for j in range(1, m+1): 
+                if word1[j-1] == word2[i-1]: 
+                    M[i][j] = 1 + min(M[i-1][j], M[i][j-1], M[i-1][j-1]-1)
+                else: 
+                    M[i][j] = 1 + min(M[i-1][j], M[i][j-1], M[i-1][j-1])
+        
+        return M[n][m]
     
