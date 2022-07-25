@@ -55,3 +55,27 @@ class Solution:
                 profit = prices[i] - minPrice
         return profit
     
+    # 42
+    def trap(self, height: List[int]) -> int:
+        # for each index i, find the max hight from index 0 to i (inclusive)
+        m_left = [0] * len(height)
+        currentMax = 0
+        for i in range(len(height)): 
+            if height[i] > currentMax: 
+                currentMax = height[i]
+            m_left[i] = currentMax
+            
+        # for each index i, find the max hight from index 0 to i (inclusive)
+        m_right = [0] * len(height)
+        currentMax = 0
+        for i in range(len(height)-1, -1, -1):  
+            if height[i] > currentMax: 
+                currentMax = height[i]
+            m_right[i] = currentMax
+        
+        ans = 0
+        for i in range(len(height)): 
+            ans += min(m_left[i], m_right[i]) - height[i]
+            
+        return ans
+    
