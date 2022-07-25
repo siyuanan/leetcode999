@@ -55,7 +55,7 @@ class Solution:
                 profit = prices[i] - minPrice
         return profit
     
-    # 42
+    # 42 trapping water with bars
     def trap(self, height: List[int]) -> int:
         # for each index i, find the max hight from index 0 to i (inclusive)
         m_left = [0] * len(height)
