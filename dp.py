@@ -79,3 +79,29 @@ class Solution:
             
         return ans
     
+    # 53 max sub-array
+    def maxSubArray(self, nums: List[int]) -> int:
+        # M[i] is the current max subarray including i
+        M = [0] * len(nums)
+        M[0] = nums[0]
+        currentLeft = 0
+        currentRight = 1
+        maxLeft = 0
+        maxRight = 1
+        currentMax = nums[0]
+        
+        for i in range(1, len(nums)): 
+            if M[i-1] > 0: 
+                M[i] = M[i-1] + nums[i]
+                currentRight += 1
+            else: 
+                M[i] = nums[i]
+                currentLeft = i
+                currentRight = i + 1
+            if M[i] > currentMax: 
+                maxLeft = currentLeft
+                maxRight = currentRight
+                currentMax = M[i]
+                
+#         return [maxLeft, maxRight]
+        return currentMax
