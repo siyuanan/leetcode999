@@ -26,4 +26,22 @@ class Solution:
                     dfs(grid, ii, jj)
                     
         return ans
+    
+    # 236 lowest common ancester
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def lca(root, p, q): 
+            if root in [None, p, q]: 
+                return root
+            
+            l = lca(root.left, p, q)
+            r = lca(root.right, p, q)
+            
+            if (l != None) and (r != None): 
+                return root
+            if l != None: 
+                return l
+            else: 
+                return r
+            
+        return lca(root, p, q)
                 
