@@ -1,6 +1,6 @@
 # dfs
 class Solution:
-    # 200
+    # 200 number of islands in matrix
     def numIslands(self, grid: List[List[str]]) -> int:
         def dfs(grid, i, j): 
             m = len(grid)
