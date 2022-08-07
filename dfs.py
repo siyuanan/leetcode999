@@ -45,6 +45,22 @@ class Solution:
             
         return lca(root, p, q)
     
+    # 235 Lowest Common Ancestor of a Binary Search Tree
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # the LCA must be within the range of p, q
+        # otherwise p and q would be on the same sub-tree of that node
+        m1 = min(p.val, q.val)
+        m2 = max(p.val, q.val)
+        
+        while root != None: 
+            if root.val < m1: 
+                root = root.right
+            elif root.val > m2: 
+                root = root.left
+            else: 
+                return root
+        return None
+    
     # 98 Validate Binary Search Tree
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         def valid(root, low = -math.inf, high = math.inf): 
