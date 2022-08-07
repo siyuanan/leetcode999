@@ -44,4 +44,15 @@ class Solution:
                 return r
             
         return lca(root, p, q)
+    
+    # 98 Validate Binary Search Tree
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def valid(root, low = -math.inf, high = math.inf): 
+            if root == None: 
+                return True
+            if (root.val <= low) or (root.val >= high):
+                return False
+            return (valid(root.left, low, root.val)) and (valid(root.right, root.val, high))
+        
+        return valid(root)
                 
