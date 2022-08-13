@@ -20,7 +20,7 @@ class Solution:
 	return -1
 
   # 74
-  def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+  def searchMatrix1(self, matrix: List[List[int]], target: int) -> bool:
       # helper function  
       def searchRow(row, target): 
           left = 0
@@ -50,6 +50,24 @@ class Solution:
             else: 
                 top = m1 + 1
         return searchRow(matrix[top-1], target)
+
+    # 240
+    def searchMatrix2(self, matrix: List[List[int]], target: int) -> bool:
+        if len(matrix) <= 0: 
+            return False
+        if len(matrix[0]) <= 0: 
+            return False
+        
+        i = len(matrix) - 1
+        j = 0
+        while i >= 0 and j < len(matrix[0]): 
+            if matrix[i][j] == target: 
+                return True
+            elif matrix[i][j] < target: 
+                j += 1
+            else: 
+                i -= 1
+        return False
 
     # 658
     def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
