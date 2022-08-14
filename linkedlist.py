@@ -65,4 +65,60 @@ class Solution:
         else: 
             cur.next = list2
         return dummy.next
+    
+    # 143. Reorder Linked List
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        if head == None or head.next == None or head.next.next == None: 
+            return head
+        
+        # find mid point (1st)
+        def mid(head): 
+            if head == None or head.next == None: 
+                return head
+            p1 = head
+            p2 = head
+            while p2.next != None and p2.next.next != None: 
+                p1 = p1.next
+                p2 = p2.next.next
+            return p1
+        
+        # reverse the 2nd list
+        def reverse(head): 
+            if head == None or head.next == None: 
+                return head
+            p = None
+            h = head
+            while h != None: 
+                n = h.next
+                h.next = p
+                p = h
+                h = n
+            return p
+        
+        def merge(l1, l2): 
+            h = ListNode()
+            cur = h
+            while l1 != None and l2 != None: 
+                cur.next = l1
+                l1 = l1.next
+                cur.next.next = l2
+                l2 = l2.next
+                cur = cur.next.next
+            cur.next = l1
+                
+        
+        mid = mid(head)
+        # print(mid.val)
+        
+        l1 = head
+        l2 = mid.next
+        # print(l2.val)
+        mid.next = None
+        l3 = reverse(l2)
+        # print(l3.val)
+        
+        merge(l1, l3)
             
