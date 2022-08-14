@@ -119,6 +119,26 @@ class Solution:
         mid.next = None
         l3 = reverse(l2)
         # print(l3.val)
-        
         merge(l1, l3)
+        
+    # 86. Partition List
+    def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
+        if head == None or head.next == None: 
+            return head
+        small = ListNode()
+        large = ListNode()
+        curSmall = small
+        curLarge = large
+        
+        while head != None: 
+            if head.val < x: 
+                curSmall.next = head
+                curSmall = curSmall.next
+            else: 
+                curLarge.next = head
+                curLarge = curLarge.next
+            head = head.next
+        curSmall.next = large.next
+        curLarge.next = None # in case curLarge.next is aonther small node
+        return small.next
             
