@@ -52,4 +52,38 @@ class Solution:
                     idx += 1
             return nums
         return mergeSort(self, nums)
+    
+    # quick sort
+    def quickSort(nums, l, r): 
+        if l > r: 
+            return
+        idx = partition(nums, l, r)
+        quickSort(nums, l, idx - 1)
+        quickSort(nums, idx + 1, r)
+
+    def partition(nums, l, r): 
+        # choose pivot then swap with last element
+        pivot = random.randint(l, r)
+        tmp = nums[pivot]
+        nums[pivot] = nums[r]
+        nums[r] = tmp
+        i, j = l, r-1
+        while i <= j: 
+            if nums[i] < nums[r]: 
+                i += 1
+            elif nums[j] >= nums[r]: 
+                j -= 1
+            else: 
+                tmp = nums[i]
+                nums[i] = nums[j]
+                nums[j] = tmp
+                i += 1
+                j -= 1
+        tmp = nums[i]
+        nums[i] = nums[r]
+        nums[r] = tmp
+        return i
+
+#     quickSort(nums, 0, len(nums)-1)
+#     return nums
         
