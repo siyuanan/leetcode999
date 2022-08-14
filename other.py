@@ -62,3 +62,34 @@ class Solution:
                 fast += 1
         for i in range(slow, len(nums)): 
             nums[i] = 0
+            
+    # 75 sort colors, rainbow sort
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        if len(nums) <= 1: 
+            return
+        
+        p0 = 0
+        p1 = 0
+        p2 = len(nums) - 1
+        # 0 - p0-1: 0
+        # p0 - p1-1: 1
+        # p1 - p2: TBD
+        # p2+1 - end: 2
+        while p1 <= p2: 
+            if nums[p1] == 0: 
+                tmp = nums[p0]
+                nums[p0] = nums[p1]
+                nums[p1] = tmp
+                p0 += 1
+                p1 += 1
+            elif nums[p1] == 1: 
+                p1 += 1
+            else: 
+                tmp = nums[p2]
+                nums[p2] = nums[p1]
+                nums[p1] = tmp
+                p2 -= 1
+        return   
