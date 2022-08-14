@@ -34,3 +34,16 @@ class Solution:
             p1 = p1.next
             p2 = p2.next.next
         return p1
+    
+    # 141. Linked List Cycle
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if head == None or head.next == None: 
+            return False
+        p1 = head
+        p2 = head
+        while p2 != None and p2.next != None: 
+            p1 = p1.next
+            p2 = p2.next.next
+            if p1 == p2: 
+                return True
+        return False
