@@ -18,3 +18,19 @@ class Solution:
         head.next.next = head
         head.next = None
         return newHead
+
+    # 876. Middle of the Linked List
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        p1 = head
+        p2 = head
+        # return the 1st of the two middle nodes
+        # while p2.next != None and p2.next.next != None: 
+        #     p1 = p1.next
+        #     p2 = p2.next.next
+        # return p1
+        
+        # return the 2nd of the two middle nodes
+        while p2!= None and p2.next != None: 
+            p1 = p1.next
+            p2 = p2.next.next
+        return p1
