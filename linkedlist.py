@@ -198,4 +198,30 @@ class Solution:
             cur = cur.next
             x = x // 10
         return dummy.next
+    
+    # 234. Palindrome Linked List
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        if head == None or head.next == None: 
+            return True
+        # first find the middle node
+        slow = head
+        fast = head
+        while fast.next != None and fast.next.next != None: 
+            slow = slow.next
+            fast = fast.next.next
+        h = slow.next
+        slow.next = None
+        p = None
+        while h != None: 
+            n = h.next
+            h.next = p
+            p = h
+            h = n
+        while p != None: 
+            if head.val != p.val: 
+                return False
+            else: 
+                head = head.next
+                p = p.next
+        return True
             
