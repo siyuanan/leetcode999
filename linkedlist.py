@@ -141,4 +141,44 @@ class Solution:
         curSmall.next = large.next
         curLarge.next = None # in case curLarge.next is aonther small node
         return small.next
+    
+    # 148. merge sort linked list
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head == None or head.next == None:
+            return head
+        # merge sort
+        # first divide the list to 2 lists
+        def findMid(head): 
+            if head == None or head.next == None: 
+                return head
+            slow = head
+            fast = head
+            while fast.next != None and fast.next.next != None: 
+                slow = slow.next
+                fast = fast.next.next
+            return slow
+        
+        mid = findMid(head)
+        tail = mid.next
+        mid.next = None
+        
+        # merge 2 sorted list
+        def merge(l1, l2): 
+            dummy = ListNode()
+            cur = dummy
+            while l1 != None and l2 != None: 
+                if l1.val < l2.val: 
+                    cur.next = l1
+                    l1 = l1.next
+                else: 
+                    cur.next = l2
+                    l2 = l2.next
+                cur = cur.next
+            if l1 != None: 
+                cur.next = l1
+            else: 
+                cur.next = l2
+            return dummy.next
+        
+        return merge(self.sortList(head), self.sortList(tail))
             
