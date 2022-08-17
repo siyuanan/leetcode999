@@ -224,4 +224,17 @@ class Solution:
                 head = head.next
                 p = p.next
         return True
+    
+    # 203. Remove Linked List Elements
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        dummy = ListNode()
+        dummy.next = head
+        p = dummy
+        while head != None: 
+            if head.val == val: 
+                p.next = head.next
+            else: 
+                p = head
+            head = head.next
+        return dummy.next
             
