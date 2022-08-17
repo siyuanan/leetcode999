@@ -71,4 +71,26 @@ class Solution:
             return (valid(root.left, low, root.val)) and (valid(root.right, root.val, high))
         
         return valid(root)
+
+    # 78. Subsets
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+    
+        def helper(nums, s, idx, result): 
+            if idx == len(nums): 
+                result.append(s)
+                return
+            # not add the char at idx to s
+            helper(nums, s, idx+1, result)
+            # add the char at idx to s
+            s = s + [nums[idx]]
+            helper(nums, s, idx+1, result)
+            # remove the char at idx before going back to previous level
+            s = s[:len(s)-1]
+            
+        result = []
+        if len(nums) <= 0: 
+            return result
+        s = [] # initialize a subset
+        helper(nums, s, 0, result)
+        return result
                 
