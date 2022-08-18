@@ -113,4 +113,26 @@ class Solution:
         cur = ''
         helper(cur, n, n, result)
         return result
+    
+    # 518. Coin Change 2
+    def change(self, amount: int, coins: List[int]) -> int:
+        def helper(amount, coins, idx, cur, result): 
+            if idx == len(coins)-1: 
+                if amount % coins[idx] == 0: 
+                    cur = cur + [amount / coins[idx]]
+                    result.append(cur)
+                    cur = cur[:-1]
+                return
+            # max number of current coin
+            m = amount // coins[idx]
+            for i in range(m+1): 
+                cur = cur + [i]
+                helper(amount - i * coins[idx], coins, idx+1, cur, result)
+                cur = cur[:-1]
+                
+        result = []
+        cur = []
+        helper(amount, coins, 0, cur, result)
+        # return result
+        return len(result)
                 
