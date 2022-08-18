@@ -14,7 +14,7 @@ class Solution:
         return result
         
     # pre-order
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         def helper(root, result): 
             if root == None: 
                 return
@@ -27,7 +27,7 @@ class Solution:
         return result
         
     # post-order
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         def helper(root, result): 
             if root == None: 
                 return
