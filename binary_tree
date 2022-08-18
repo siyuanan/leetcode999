@@ -57,7 +57,7 @@ class Solution:
             return max(left, right)+1
         return height(root) >= 0
         
-    class Solution:
+    # 101. Symmetric Tree
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         def symmetric(t1, t2): 
             if t1 == None and t2 == None: 
