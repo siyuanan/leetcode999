@@ -56,3 +56,32 @@ class Solution:
                 return -1
             return max(left, right)+1
         return height(root) >= 0
+        
+    class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        def symmetric(t1, t2): 
+            if t1 == None and t2 == None: 
+                return True
+            elif t1 == None or t2 == None: 
+                return False
+            elif t1.val != t2.val: 
+                return False
+            return symmetric(t1.left, t2.right) and symmetric(t1.right, t2.left)
+        
+        if root == None: 
+            return True
+        return symmetric(root.left, root.right)
+        
+    # 951. Flip Equivalent Binary Trees
+    def flipEquiv(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+        if root1 == None and root2 == None: 
+            return True
+        elif root1 == None or root2 == None: 
+            return False
+        elif root1.val != root2.val: 
+            return False
+        return (
+            self.flipEquiv(root1.left, root2.left) and self.flipEquiv(root1.right, root2.right)
+        ) or (
+            self.flipEquiv(root1.left, root2.right) and self.flipEquiv(root1.right, root2.left)
+        )
