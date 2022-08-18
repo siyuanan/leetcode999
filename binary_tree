@@ -1,0 +1,40 @@
+# binary tree
+class Solution:
+    # inorder traversal
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        def helper(root, result): 
+            if root == None: 
+                return
+            helper(root.left, result)
+            result.append(root.val)
+            helper(root.right, result)
+            
+        result = []
+        helper(root, result)
+        return result
+        
+    # pre-order
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        def helper(root, result): 
+            if root == None: 
+                return
+            result.append(root.val)
+            helper(root.left, result)
+            helper(root.right, result)
+            
+        result = []
+        helper(root, result)
+        return result
+        
+    # post-order
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        def helper(root, result): 
+            if root == None: 
+                return
+            helper(root.left, result)
+            helper(root.right, result)
+            result.append(root.val)
+            
+        result = []
+        helper(root, result)
+        return result
