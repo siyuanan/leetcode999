@@ -135,4 +135,26 @@ class Solution:
         helper(amount, coins, 0, cur, result)
         # return result
         return len(result)
+    
+    # 46. Permutations
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        def swap(arr, i, j):
+            tmp = arr[i]
+            arr[i] = arr[j]
+            arr[j] = tmp
+            return arr
+        
+        def helper(arr, idx, result): 
+            if idx == len(arr): 
+                tmp = arr.copy()
+                result.append(tmp)
+                return
+            for i in range(idx, len(arr)): 
+                arr = swap(arr, idx, i)
+                helper(arr, idx + 1, result)
+                arr = swap(arr, idx, i)
+
+        result = []
+        helper(nums, 0, result)
+        return result
                 
