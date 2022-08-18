@@ -93,4 +93,24 @@ class Solution:
         s = [] # initialize a subset
         helper(nums, s, 0, result)
         return result
+    
+    # 22. Generate Valid Parentheses
+    def generateParenthesis(self, n: int) -> List[str]:
+        def helper(cur, left, right, result): 
+            if left == 0 and right == 0: 
+                result.append(cur)
+                return
+            if left > 0: 
+                cur = cur + '('
+                helper(cur, left - 1, right, result)
+                cur = cur[:-1]
+            if right > left: 
+                cur = cur + ')'
+                helper(cur, left, right - 1, result)
+                cur = cur[:-1]
+                
+        result = []
+        cur = ''
+        helper(cur, n, n, result)
+        return result
                 
