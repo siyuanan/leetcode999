@@ -96,3 +96,23 @@ class Solution:
             return valid(node.left, left, node.val) and (valid(node.right, node.val, right))
         
         return valid(root, -math.inf, math.inf)
+        
+    # 938. Range Sum of BST
+    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
+        def helper(node, low, high, result):
+            if node == None: 
+                return 
+            if node.val >= low and node.val <= high: 
+                # result.append(node.val)
+                result = result + node.val
+                print('+1')
+                print(result)
+            if node.val >= low:
+                helper(node.left, low, high, result)
+            if node.val <= high: 
+                helper(node.right, low, high, result)
+                
+        # result = []
+        result = 0
+        helper(root, low, high, result)
+        return result
