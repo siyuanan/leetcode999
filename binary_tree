@@ -85,3 +85,14 @@ class Solution:
         ) or (
             self.flipEquiv(root1.left, root2.right) and self.flipEquiv(root1.right, root2.left)
         )
+        
+    # 98. Validate Binary Search Tree
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def valid(node, left, right): 
+            if node == None: 
+                return True
+            if (node.val <= left) or (node.val >= right): 
+                return False
+            return valid(node.left, left, node.val) and (valid(node.right, node.val, right))
+        
+        return valid(root, -math.inf, math.inf)
