@@ -116,3 +116,28 @@ class Solution:
         result = 0
         helper(root, low, high, result)
         return result
+        
+    # 701. Insert into a Binary Search Tree
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if root == None: 
+            return TreeNode(val = val)
+        # iterative
+        # cur = root
+        # while cur.val != val: 
+        #     if val < cur.val: 
+        #         if cur.left == None: 
+        #             cur.left = TreeNode(val = val)
+        #         cur = cur.left
+        #     else: 
+        #         if cur.right == None: 
+        #             cur.right = TreeNode(val = val)
+        #         cur = cur.right
+        # return root
+        
+        # recursive
+        if val < root.val: 
+            root.left = self.insertIntoBST(root.left, val)
+        elif val > root.val:
+            root.right = self.insertIntoBST(root.right, val)
+            
+        return root
