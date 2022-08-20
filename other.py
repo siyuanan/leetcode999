@@ -92,4 +92,38 @@ class Solution:
                 nums[p2] = nums[p1]
                 nums[p1] = tmp
                 p2 -= 1
-        return   
+        return
+    
+    # 1249. Minimum Remove to Make Valid Parentheses
+    def minRemoveToMakeValid(self, s: str) -> str:
+        if '(' not in s and ')' not in s: 
+            return s
+        pos = set() # set to save the positions to remove
+        
+        left = 0
+        for i in range(len(s)): 
+            if s[i] == '(': 
+                left += 1
+            elif s[i] == ')': 
+                left -= 1
+            if left < 0: 
+                pos.add(i)
+                left += 1
+        
+        right = 0
+        for j in range(len(s)-1, -1, -1): 
+            if s[j] == ')': 
+                right += 1
+            elif s[j] == '(': 
+                right -= 1
+            if right < 0: 
+                pos.add(j)
+                right += 1
+        
+        s1 = []
+        if len(pos) > 0: 
+            for k in range(0, len(s)): 
+                if k not in pos: 
+                    s1.append(s[k])
+        # return pos
+        return ''.join(s1)
