@@ -225,4 +225,20 @@ class Solution:
             if len(res) > 0: 
                 result.append(res)
         return result
+    
+    # 543. Diameter of Binary Tree
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        if root == None: 
+            return 0
+        d = 0
+        def dfs(node): 
+            nonlocal d
+            if node == None: 
+                return 0
+            left = dfs(node.left)
+            right = dfs(node.right)
+            d = max(d, left + right)
+            return max(left, right) + 1
+        dfs(root)
+        return d
                 
