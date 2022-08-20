@@ -147,3 +147,35 @@ class Solution:
                     a += 1
                 w += cnt
         return w == len(word) and a == len(abbr)
+    
+    # 8. String to Integer (atoi)
+    def myAtoi(self, s: str) -> int:
+        if len(s) <= 0: 
+            return 0
+        i = 0
+        while (i < len(s)) and (s[i] == ' '): 
+            i += 1
+        if i == len(s): 
+            return 0
+        if (s[i] not in ['-', '+']) and(s[i] < '0' or s[i] > '9'): 
+            return 0
+
+        neg = 0
+        cnt = 0
+        if s[i] == '-': 
+            neg = 1
+            i += 1
+        elif s[i] == '+': 
+            i += 1 
+            
+        while i < len(s) and s[i] >= '0' and s[i] <= '9': 
+            cnt = 10 * cnt + int(s[i])
+            i += 1
+                
+        cnt = cnt * (-1)**neg
+        if cnt > 2**31 - 1: 
+            cnt = 2**31 - 1
+        if cnt < - 2**31: 
+            cnt = - 2**31
+            
+        return cnt
