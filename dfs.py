@@ -61,6 +61,34 @@ class Solution:
                 return root
         return None
     
+    # 1650. Lowest Common Ancestor of a Binary Tree III with parent pointer
+    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+        # get node depth
+        def depth(node): 
+            d = 0
+            while node != None: 
+                node = node.parent
+                d += 1
+            return d
+        
+        # move the lower node the same level with high node
+        def merge(low, high, diff): 
+            while diff > 0: 
+                low = low.parent
+                diff -= 1
+            # now the two nodes are the same level
+            while low != high: 
+                low = low.parent
+                high = high.parent
+            return low
+        
+        d1 = depth(p)
+        d2 = depth(q)
+        if d1 > d2: 
+            return merge(p, q, d1-d2)
+        else: 
+            return merge(q, p, d2-d1)
+    
     # 98 Validate Binary Search Tree
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         def valid(root, low = -math.inf, high = math.inf): 
