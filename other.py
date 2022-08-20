@@ -127,3 +127,23 @@ class Solution:
                     s1.append(s[k])
         # return pos
         return ''.join(s1)
+    
+    # 408. Valid Word Abbreviation
+    def validWordAbbreviation(self, word: str, abbr: str) -> bool:
+        w = 0
+        a = 0
+        while w < len(word) and a < len(abbr): 
+            # use <= 0 here so that when first time seeing 0, return False
+            if abbr[a] <= '0' or abbr[a] > '9': 
+                if word[w] != abbr[a]: 
+                    return False
+                w += 1
+                a += 1
+            else: 
+                
+                cnt = 0
+                while (a < len(abbr)) and (abbr[a] >= '0') and (abbr[a] <= '9'): 
+                    cnt = cnt * 10 + int(abbr[a])
+                    a += 1
+                w += cnt
+        return w == len(word) and a == len(abbr)
