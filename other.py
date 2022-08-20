@@ -28,6 +28,27 @@ class Solution:
                 maxRight = currentRight - 1
         
         return s[maxLeft:maxRight + 1]
+    
+    # 680. Valid Palindrome II after remove 1 char
+    def validPalindrome(self, s: str) -> bool:
+        if len(s) <= 2: 
+            return True
+        def checkPalindrome(s, l, r): 
+            while l < r: 
+                if s[l] != s[r]: 
+                    return False
+                l += 1
+                r -= 1
+            return True
+        
+        l = 0
+        r = len(s) - 1
+        while l < r: 
+            if s[l] != s[r]: 
+                return checkPalindrome(s, l+1, r) or checkPalindrome(s, l, r-1)
+            l += 1
+            r -= 1
+        return True
 
     # 283 move 0s to the end
     def moveZeroes(self, nums: List[int]) -> None:
