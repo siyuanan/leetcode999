@@ -185,4 +185,44 @@ class Solution:
         result = []
         helper(nums, 0, result)
         return result
+    
+    # 314. Binary Tree Vertical Order Traversal
+    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if root == None: 
+            return []
+        
+        table = dict()
+        min_col = 0
+        max_col = 0
+        min_row = 0
+        max_row = 0
+        
+        # dfs
+        def dfs(node, row, col): 
+            nonlocal min_col, max_col, min_row, max_row
+            if node != None: 
+                min_col = min(col, min_col)
+                max_col = max(col, max_col)
+                min_row = min(row, min_row)
+                max_row = max(row, max_row)
+                if (row, col) not in table.keys(): 
+                    table[(row, col)] = []
+                table[(row, col)].append(node.val)
+                
+                dfs(node.left, row + 1, col - 1)
+                dfs(node.right, row + 1, col + 1)
+        
+        dfs(root, 0, 0)
+        
+        result = []
+        for i in range(min_col, max_col+1): 
+            res = []
+            for j in range(min_row, max_row+1): 
+                if (j, i) in table.keys(): 
+                    for n in table[(j, i)]: 
+                        res.append(n)
+
+            if len(res) > 0: 
+                result.append(res)
+        return result
                 
