@@ -200,3 +200,20 @@ class Solution:
             cnt = - 2**31
             
         return cnt
+    
+    # 1570. Dot Product of Two Sparse Vectors implementation
+    class SparseVector:
+        def __init__(self, nums: List[int]):
+            self.values = {}
+            self.len = len(nums)
+            for i in range(len(nums)): 
+                if nums[i] != 0: 
+                    self.values[i] = nums[i]
+
+        # Return the dotProduct of two sparse vectors
+        def dotProduct(self, vec: 'SparseVector') -> int:
+            s = 0
+            for i in range(self.len): 
+                if (i in self.values.keys()) and (i in vec.values.keys()): 
+                    s += self.values[i] * vec.values[i]
+            return s
