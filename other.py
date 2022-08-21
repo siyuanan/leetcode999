@@ -115,6 +115,21 @@ class Solution:
                 p2 -= 1
         return
     
+    # 11. Container With Most Water
+    def maxArea(self, height: List[int]) -> int:
+        if len(height) <= 1: 
+            return 0
+        w = 0
+        l = 0
+        r = len(height) - 1
+        while l < r: 
+            w = max(w, min(height[l], height[r]) * (r - l))
+            if height[l] <= height[r]: 
+                l += 1
+            else: 
+                r -= 1
+        return w
+    
     # 1249. Minimum Remove to Make Valid Parentheses
     def minRemoveToMakeValid(self, s: str) -> str:
         if '(' not in s and ')' not in s: 
