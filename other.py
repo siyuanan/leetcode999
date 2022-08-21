@@ -217,3 +217,26 @@ class Solution:
                 if (i in self.values.keys()) and (i in vec.values.keys()): 
                     s += self.values[i] * vec.values[i]
             return s
+        
+    # 249. Group Shifted Strings
+    def groupStrings(self, strings: List[str]) -> List[List[str]]:
+        table = {}
+        # first find the hash key for each word
+        # shift the word to start with a
+        for w in strings: 
+            s = ord(w[0]) - ord('a')
+            chars = []
+            for c in w: 
+                if ord(c) - s < ord('a'): 
+                    chars.append(chr(26 - s + ord(c)))
+                else: 
+                    chars.append(chr(ord(c) - s))
+            k = ''.join(chars)
+            if k not in table.keys(): 
+                table[k] = [w]
+            else: 
+                table[k].append(w)
+        result = []
+        for k in table.keys(): 
+            result.append(table[k])
+        return result
