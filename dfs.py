@@ -244,16 +244,14 @@ class Solution:
     
     # 339. Nested List Weight Sum
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
-        s = 0
         def dfs(lst, d): 
-            nonlocal s
-            # this level
-            s += sum([d * sum([i.getInteger()]) for i in lst if i.getInteger()])
-            # next level
-            for l in [l.getList() for l in lst if l.getList()]: 
-                s1 = dfs(l, d+1)
-                if s1: 
-                    s += s1
-        dfs(nestedList, 1)
-        return s
+            s = 0
+            for l in lst: 
+                if l.isInteger(): 
+                    s += l.getInteger() * d
+                else: 
+                    s += dfs(l.getList(), d+1)
+            return s
+        
+        return dfs(nestedList, 1)
                 
