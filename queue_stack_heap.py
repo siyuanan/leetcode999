@@ -99,3 +99,16 @@ class Solution:
                     h[0] = n
                     percolateDown(h, 0)
         return h[0]
+    
+    # 71. Simplify Path
+    def simplifyPath(self, path: str) -> str:
+        s = []
+        for part in path.split('/'): 
+            if part == '..': 
+                if len(s) > 0: 
+                    s.pop()
+            elif part == '.' or len(part) <= 0: 
+                continue
+            else: 
+                s.append(part)
+        return '/' + '/'.join(s)
