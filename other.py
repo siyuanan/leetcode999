@@ -115,6 +115,27 @@ class Solution:
                 p2 -= 1
         return
     
+    # 791. Custom Sort String
+    def customSortString(self, order: str, s: str) -> str:
+        # use dictionary to store s
+        s_dict = {}
+        for c in s: 
+            if c in s_dict: 
+                s_dict[c] += 1
+            else: 
+                s_dict[c] = 1
+                
+        res = []
+        for c in order: 
+            if c in s_dict: 
+                res.append(c * s_dict[c])
+                s_dict.pop(c)
+                
+        for c in s_dict: 
+            res.append(c * s_dict[c])
+            
+        return ''.join(res)
+    
     # 11. Container With Most Water
     def maxArea(self, height: List[int]) -> int:
         if len(height) <= 1: 
