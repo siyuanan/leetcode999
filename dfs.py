@@ -254,4 +254,63 @@ class Solution:
             return s
         
         return dfs(nestedList, 1)
+    
+    
+    # interview add operators
+    def addOperators(self, num: str, target: int) -> List[str]:
+        from collections import deque
+        def calculate(s): 
+            res = deque() # as a stack
+            operation = '+'
+            curNumber = 0
+            i = 0
+            
+            while i < len(s): 
+                while i < len(s) and s[i] >= '0' and s[i] <= '9': 
+                    curNumber = 10 * curNumber + int(s[i])
+                    i += 1
+                
+                if i < len(s):
+                    if operation == '+': 
+                        res.append(curNumber)
+                    elif operation == '-': 
+                        res.append(-curNumber)
+                    elif operation == '*': 
+                        res.append(curNumber * res.pop())
+                    else: 
+                        res.append(int(res.pop() / curNumber))
+
+                    operation = s[i]
+                    curNumber = 0
+                    i += 1
+                 
+            if operation == '+': 
+                res.append(curNumber)
+            elif operation == '-': 
+                res.append(-curNumber)
+            elif operation == '*': 
+                res.append(curNumber * res.pop())
+            else: 
+                res.append(int(res.pop() / curNumber))
+            
+            return sum(res)
+        
+        result = []
+        def dfs(num, exp, i, result, target): 
+            if i == len(num): 
+                if calculate(exp) == target: 
+                    result.append(exp)
+                return
+            
+            if num[i-1] != 0:
+                dfs(num, exp + num[i], i+1, result, target)
+            dfs(num, exp + '+' + num[i], i+1, result, target)
+            dfs(num, exp + '-' + num[i], i+1, result, target)
+            dfs(num, exp + '*' + num[i], i+1, result, target)
+            # if num[i] != 0: 
+            #     dfs(num, exp + '/' + num[i], i+1, result, target)
+            
+        dfs(num, num[0], 1, result, target)
+        return result
+
                 
