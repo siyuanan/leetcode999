@@ -302,15 +302,13 @@ class Solution:
                     result.append(exp)
                 return
             
-            if num[i-1] != 0:
+            if exp[-1] != '0':
                 dfs(num, exp + num[i], i+1, result, target)
             dfs(num, exp + '+' + num[i], i+1, result, target)
             dfs(num, exp + '-' + num[i], i+1, result, target)
             dfs(num, exp + '*' + num[i], i+1, result, target)
-            # if num[i] != 0: 
-            #     dfs(num, exp + '/' + num[i], i+1, result, target)
+            if num[i] != '0': 
+                dfs(num, exp + '/' + num[i], i+1, result, target)
             
         dfs(num, num[0], 1, result, target)
         return result
-
-                
