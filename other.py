@@ -293,3 +293,58 @@ class Solution:
         for k in table.keys(): 
             result.append(table[k])
         return result
+    
+    # 65. Valid Number
+    def isNumber(self, s: str) -> bool:
+        if len(s) <= 0: 
+            return False
+        
+        def digit(c): 
+            return (c >= '0' and c <= '9')
+        def valid(c):
+            return digit(c) or c in ['.', '-', '+']
+        
+        if len(s) == 1: 
+            return digit(s)
+        
+        i = 0
+        dot = 0
+        e = 0
+        e1 = False # number before e
+        e2 = False # number after e
+        d = False
+        while i < len(s): 
+            c = s[i]
+            if not valid(c) and c.lower() != 'e': 
+                return False
+            
+            elif digit(c): 
+                d = True
+                if e == 0: 
+                    e1 = True
+                if e == 1: 
+                    e2 = True
+                i += 1
+                
+            elif c.lower() == 'e': 
+                if i == 0 or e == 1: 
+                    return False
+                e += 1
+                i += 1
+                
+            elif c == '.': 
+                if dot == 1 or e == 1: 
+                    return False
+                else: 
+                    dot += 1
+                    i += 1
+            
+            elif c in ['-', '+']: 
+                if i != 0 and s[i-1].lower() != 'e': 
+                    return False
+                i += 1
+        
+        if e == 1:
+            return e1 and e2
+        
+        return d
