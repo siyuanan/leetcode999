@@ -41,3 +41,42 @@ class Solution:
                     q.extendleft(l.getList())
             d += 1
         return s
+    
+    # 1091. Shortest Path in Binary Matrix
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+                
+        def neighbors(row, col, max_row, max_col, grid): 
+            neighbors = []
+            for i, j in [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]: 
+                new_row = row + i
+                new_col = col + j
+                if new_row >= 0 and new_row <= max_row and new_col >= 0 and new_col <= max_col and grid[new_row][new_col] == 0: 
+                    neighbors.append([new_row, new_col])
+            return neighbors
+        
+        max_row = len(grid)-1
+        max_col = len(grid[0])-1
+        if grid[0][0] == 1 or grid[max_row][max_col] == 1: 
+            return -1
+        
+        # key: current position
+        # value: number of node on the path
+        visited = {(0,0)}
+        q = collections.deque([(0,0,1)])
+        q.append([0,0,1])
+        while q: 
+            cur = q.popleft()
+            row = cur[0]
+            col = cur[1]
+            d = cur[2]
+            if row == max_row and col == max_col: 
+                return d
+
+            for n in neighbors(row, col, max_row, max_col, grid): 
+                if (n[0],n[1]) in visited:  
+                    continue
+                visited.add((n[0],n[1]))
+                q.append([n[0], n[1], d+1])
+
+        return -1
+
