@@ -190,3 +190,26 @@ class Solution:
                 left = mid + 1
                 
         return -1
+
+
+    # 1891. Cutting Ribbons
+    def maxLength(self, ribbons: List[int], k: int) -> int:
+        def cut(l, ribbons, k): 
+            # see if can cut k parts with length l from ribbons
+            cnt = 0
+            for r in ribbons: 
+                cnt += r // l
+                if cnt >= k: 
+                    return True
+            return False
+        
+        small = 1
+        large = max(ribbons)
+        
+        while small <= large: 
+            m = (small + large) // 2
+            if cut(m, ribbons, k): 
+                small = m + 1
+            else: 
+                large = m - 1
+        return small - 1
