@@ -79,4 +79,24 @@ class Solution:
                 q.append([n[0], n[1], d+1])
 
         return -1
+    
+    # 199. Binary Tree Right Side View
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if root == None: 
+            return []
+        res = []
+        q = collections.deque()
+        q.append(root)
+        while q: 
+            s = len(q)
+            for i in range(s): 
+                node = q.popleft()
+                if node.left != None: 
+                    q.append(node.left)
+                if node.right != None: 
+                    q.append(node.right)
+                if i == s-1: 
+                    res.append(node.val)
+        return res
+            
 
