@@ -343,8 +343,44 @@ class Solution:
                 if i != 0 and s[i-1].lower() != 'e': 
                     return False
                 i += 1
-        
         if e == 1:
             return e1 and e2
-        
         return d
+    
+    # 498. Diagonal Traverse
+    def findDiagonalOrder(self, mat: List[List[int]]) -> List[int]:
+        if len(mat) == 0: 
+            return []
+        if len(mat[0]) == 0: 
+            return []
+        def valid(i, j, mat): 
+            return i >= 0 and i < len(mat) and j >= 0 and j < len(mat[0])
+        i = 0
+        j = 0
+        move = [(-1,1), (1,-1)]
+        k = 1
+        res = []
+        while not (i == len(mat)-1 and j == len(mat[0])-1): 
+            while valid(i, j, mat): 
+                res.append(mat[i][j])
+                if k == 1: 
+                    diff = move[0]
+                else: 
+                    diff = move[1]
+                i += diff[0]
+                j += diff[1]
+            if k == 1:
+                if i < 0 and j < len(mat[0]): # upper line
+                    i += 1
+                else: # upper right corner and right line
+                    i += 2
+                    j -= 1
+            else: 
+                if i < len(mat) and j < 0: # left line
+                    j += 1
+                else: # lower left corner and lower line
+                    i -= 1
+                    j += 2                 
+            k = 1-k
+        res.append(mat[len(mat)-1][len(mat[0])-1])
+        return res
