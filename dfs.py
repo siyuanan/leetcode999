@@ -339,3 +339,31 @@ class Solution:
             
         dfs(root)
         return root
+    
+    # 426. Convert Binary Search Tree to Sorted Doubly Linked List
+    def treeToDoublyList(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if root == None: 
+            return None
+        
+        def dfs(node): 
+            nonlocal first, last
+            
+            if node == None: 
+                return None
+            
+            dfs(node.left)
+            if last != None: 
+                last.right = node
+                node.left = last
+            else: 
+                first = node
+            
+            last = node
+            dfs(node.right)
+            
+        first = None
+        last = None
+        dfs(root)
+        last.right = first
+        first.left = last
+        return first
