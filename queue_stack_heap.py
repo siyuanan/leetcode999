@@ -112,3 +112,51 @@ class Solution:
             else: 
                 s.append(part)
         return '/' + '/'.join(s)
+    
+    
+    # 973. K Closest Points to Origin
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        # define a comparator
+        def closer(p1, p2): 
+            return (p1[0]*p1[0] + p1[1]*p1[1]) <= (p2[0]*p2[0] + p2[1]*p2[1])
+        
+        def swap(q, i, j): 
+            tmp = q[i]
+            q[i] = q[j]
+            q[j] = tmp
+        
+        # percolat up and down in a max heap
+        def percolateUp(q, i): 
+            while (i > 0) and (closer(q[(i-1)//2], q[i])): 
+                swap(q, i, (i-1)//2)
+                i = (i-1)//2
+                
+        def percolateDown(q, i): 
+            while (i < len(q)//2): 
+                if i*2+2 >= len(q): 
+                    if closer(q[i], q[i*2+1]): 
+                        swap(q, i, i*2+1)
+                    i = i*2+1
+
+                else: 
+                    if (closer(q[i], q[i*2+1]) or closer(q[i], q[i*2+2])): 
+                        if closer(q[i*2+1], q[i*2+2]): 
+                            swap(q, i, i*2+2)
+                            i = i*2+2
+                        else: 
+                            swap(q, i, i*2+1)
+                            i = i*2+1
+                    else: 
+                        i = len(q)
+                    
+        res = []
+        for p in points: 
+            if len(res) < k: 
+                res.append(p)
+                percolateUp(res, len(res)-1)
+            else: 
+                if closer(p, res[0]): 
+                    res[0] = p
+                    percolateDown(res, 0)
+                    
+        return res
