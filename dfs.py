@@ -312,3 +312,30 @@ class Solution:
             
         dfs(num, num[0], 1, result, target)
         return result
+    
+    # 114. Flatten Binary Tree to Linked List
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        if root == None: 
+            return None
+        def dfs(node): 
+            if node == None: 
+                return None
+            if node.left == None and node.right == None: 
+                return node
+            
+            leftTail = dfs(node.left)
+            rightTail = dfs(node.right)
+            if leftTail != None: 
+                leftTail.right = node.right
+                node.right = node.left
+                node.left = None
+            if rightTail != None: 
+                return rightTail
+            else: 
+                return leftTail
+            
+        dfs(root)
+        return root
