@@ -386,6 +386,7 @@ class Solution:
         return res
     
     # 560. Subarray Sum Equals K
+    # n^3, fail at 10k
     def subarraySum(self, nums: List[int], k: int) -> int:
         if len(nums) <= 0: 
             return 0
@@ -398,4 +399,17 @@ class Solution:
                     cnt += 1
             l -= 1
             
+        return cnt
+    
+    # n^2 fail at 20k
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        if len(nums) <= 0: 
+            return 0
+        cnt = 0
+        for i in range(len(nums)): 
+            s = 0
+            for j in range(i, len(nums)): 
+                s += nums[j]
+                if s == k: 
+                    cnt += 1
         return cnt
