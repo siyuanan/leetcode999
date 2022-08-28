@@ -367,3 +367,49 @@ class Solution:
         last.right = first
         first.left = last
         return first
+    
+    # 173. Binary Search Tree Iterator
+    # method 1: flatten the tree
+    def __init__(self, root: Optional[TreeNode]):
+        self.root = root
+        self.index = -1
+        self.nodes = []
+        self.flatten(root)
+
+    def flatten(self, root): 
+        if root == None: 
+            return None
+        self.flatten(root.left)
+        self.nodes.append(root.val)
+        self.flatten(root.right)
+  
+    def next(self) -> int:
+        self.index += 1
+        if self.index < len(self.nodes): 
+            return self.nodes[self.index]
+
+    def hasNext(self) -> bool:
+        return self.index < len(self.nodes)-1
+    
+    # method 2: use stack to store nodes
+    # simulating recursion
+    def __init__(self, root: Optional[TreeNode]):
+        self.root = root
+        self.stack = []
+        _cur = root
+        while _cur != None: 
+            self.stack.append(_cur)
+            _cur = _cur.left
+        
+    def next(self) -> int:
+        if len(self.stack) <= 0: 
+            return None
+        _node = self.stack.pop()
+        _cur = _node.right
+        while _cur != None: 
+            self.stack.append(_cur)
+            _cur = _cur.left
+        return _node.val
+        
+    def hasNext(self) -> bool:
+        return len(self.stack) > 0
