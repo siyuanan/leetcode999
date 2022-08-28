@@ -226,6 +226,44 @@ class Solution:
                 result.append(res)
         return result
     
+    # 987. Vertical Order Traversal of a Binary Tree
+    def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if root == None: 
+            return []
+        
+        map_nodes = {}
+        min_col = 0
+        max_col = 0
+        min_row = 0
+        max_row = 0
+        
+        def dfs(node, row, col): 
+            if node == None: 
+                return
+            nonlocal map_nodes, min_col, max_col, min_row, max_row
+            if (row,col) in map_nodes: 
+                map_nodes[(row,col)].append(node.val)
+            else: 
+                map_nodes[(row,col)] = [node.val]
+            min_row = min(row, min_row)
+            max_row = max(row, max_row)
+            min_col = min(col, min_col)
+            max_col = max(col, max_col)
+            dfs(node.left, row + 1, col - 1)
+            dfs(node.right, row + 1, col + 1)
+            
+        dfs(root, 0, 0)
+        print(map_nodes)
+        res = []
+        for i in range(min_col, max_col+1): 
+            cell = []
+            for j in range(min_row, max_row+1): 
+                if (j,i) in map_nodes: 
+                    cell += sorted(map_nodes[(j,i)])
+            if len(cell) > 0: 
+                res.append(cell)
+        return res
+    
     # 543. Diameter of Binary Tree
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         if root == None: 
