@@ -384,3 +384,18 @@ class Solution:
             k = 1-k
         res.append(mat[len(mat)-1][len(mat[0])-1])
         return res
+    
+    # 560. Subarray Sum Equals K
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        if len(nums) <= 0: 
+            return 0
+        l = len(nums)
+        cnt = 0
+        while l > 0: 
+            i = 0
+            for j in range(i+l, len(nums)+1): 
+                if sum(nums[j-l:j]) == k: 
+                    cnt += 1
+            l -= 1
+            
+        return cnt
