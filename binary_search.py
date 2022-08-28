@@ -213,3 +213,20 @@ class Solution:
             else: 
                 large = m - 1
         return small - 1
+
+    # 162. Find Peak Element
+    def findPeakElement(self, nums: List[int]) -> int:
+        if len(nums) <= 0:
+            return -1
+        if len(nums) == 1:
+            return 0
+        if nums[0] > nums[1]: 
+            return 0
+        if nums[-1] > nums[-2]: 
+            return len(nums)-1
+        
+        # use linear scan:
+        for i in range(1, len(nums)-1): 
+            if nums[i-1] < nums[i] and nums[i+1] < nums[i]: 
+                return i
+        return -1
