@@ -413,3 +413,21 @@ class Solution:
                 if s == k: 
                     cnt += 1
         return cnt
+    
+    # O(n)
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        if len(nums) <= 0: 
+            return 0
+        sum_dict = {0: 1}
+        s = 0
+        cnt = 0
+        
+        for n in nums: 
+            s += n
+            if s-k in sum_dict.keys(): 
+                cnt += sum_dict[s-k]
+            if s in sum_dict.keys(): 
+                sum_dict[s] += 1
+            else: 
+                sum_dict[s] = 1
+        return cnt
