@@ -230,3 +230,14 @@ class Solution:
             if nums[i-1] < nums[i] and nums[i+1] < nums[i]: 
                 return i
         return -1
+
+	# use binary search
+        left = 0
+        right = len(nums) - 1
+        while left < right: 
+            m = (left + right) // 2
+            if nums[m] > nums[m+1]: 
+                right = m
+            else: 
+                left = m + 1
+        return left
