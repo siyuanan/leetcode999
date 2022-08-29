@@ -105,3 +105,33 @@ class Solution:
                 
 #         return [maxLeft, maxRight]
         return currentMax
+
+    # 670. Maximum Swap
+    def maximumSwap(self, num: int) -> int:
+        if num <= 11: 
+            return num
+        
+        # use dp to find the max digit in the remaining part
+        # including the current digit
+        s = list(str(num))
+        max_remain = [0] * len(s)
+        m = 0 # current max
+        for i in range(len(s)-1, -1, -1): 
+            if int(s[i]) > m: 
+                m = int(s[i])
+            max_remain[i] = m
+
+        j = 0
+        while j < len(s) and int(s[j]) >= max_remain[j]: 
+            j += 1
+        if j < len(s): # swap j with the max in remaining part
+            k = len(s)-1
+            while max_remain[k] < max_remain[j]: 
+                # find the last digit of the max
+                k -= 1
+            # swap j and k
+            tmp = s[j]
+            s[j] = s[k]
+            s[k] = tmp
+        
+        return ''.join(s)
