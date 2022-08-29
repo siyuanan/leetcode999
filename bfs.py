@@ -98,5 +98,22 @@ class Solution:
                 if i == s-1: 
                     res.append(node.val)
         return res
+    
+    # 129. Sum Root to Leaf Numbers
+    def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        if root == None: 
+            return 0
+        s = 0
+        q = collections.deque()
+        q.append((root, 0))
+        while q: 
+            node, num = q.pop()
+            if node.left == None and node.right == None: 
+                s += num * 10 + node.val
+            if node.left != None: 
+                q.append((node.left, num*10 + node.val))
+            if node.right != None: 
+                q.append((node.right, num*10 + node.val))
+        return s
             
 
