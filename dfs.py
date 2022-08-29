@@ -451,3 +451,25 @@ class Solution:
         
     def hasNext(self) -> bool:
         return len(self.stack) > 0
+    
+    
+    # 129. Sum Root to Leaf Numbers
+    def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        # dfs
+        if root == None: 
+            return 0
+        s = 0
+        def dfs(node, num): 
+            nonlocal s
+            if node.left == None and node.right == None: 
+                s += (num * 10 + node.val)
+                return
+            
+            if node.right != None: 
+                dfs(node.right, num * 10 + node.val)
+            
+            if node.left != None: 
+                dfs(node.left, num * 10 + node.val)
+
+        dfs(root, 0)
+        return s
