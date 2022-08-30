@@ -160,3 +160,71 @@ class Solution:
                     percolateDown(res, 0)
                     
         return res
+    
+    # 347. Top K Frequent Elements
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # record number and counts
+        num_dict = {}
+        for n in nums: 
+            if n in num_dict: 
+                num_dict[n] += 1
+            else: 
+                num_dict[n] = 1
+        
+        def swap(lst, i, j): 
+            tmp = lst[i]
+            lst[i] = lst[j]
+            lst[j] = tmp
+            
+        # compare needs to use <=
+        # in case i > j1 = j2
+        def compare(lst, i, j, num_dict): 
+            return num_dict[lst[i]] <= num_dict[lst[j]]
+        
+        # use mean heap to store k elements
+        # if new elements > top, replace top then percolate down
+        def percolateUp(lst, i, num_dict): 
+            while i > 0: 
+                j = (i-1) // 2
+                if compare(lst, i, j, num_dict): 
+                    swap(lst, i, j)
+                    i = j
+                else: 
+                    break
+        def percolateDown(lst, i, num_dict): 
+            while i < len(lst)//2: 
+                j1 = i*2+1
+                j2 = i*2+2
+                if j2 == len(lst): # only 1 child
+                    if compare(lst, j1, i, num_dict): 
+                        swap(lst, i, j1)
+                        i = j1
+                    else: 
+                        i = len(lst)
+                else: # 2 children
+                    if compare(lst, j2, j1, num_dict) and compare(lst, j2, i, num_dict):
+                        swap(lst, i, j2)
+                        i = j2
+                    elif compare(lst, j1, j2, num_dict) and compare(lst, j1, i, num_dict):
+                        swap(lst, i, j1)
+                        i = j1
+                    else: 
+                        i = len(lst)
+                    
+        
+        res = []
+        for n in num_dict: 
+            if len(res) < k: 
+                res.append(n)
+                percolateUp(res, len(res)-1, num_dict)
+            else: 
+                if num_dict[res[0]] < num_dict[n]: 
+                    res[0] = n
+                    percolateDown(res, 0, num_dict)
+        return res
+                
+                
+                
+                
+                
+                
