@@ -1,0 +1,36 @@
+314. tree vertical order traversal
+BFS using q: popleft!!!! append children aftee processing node
+DFS needs to use row and col to make sure nodes in order of up -> down, left -> right
+
+# 227 calculators
+class Solution:
+    def calculate(self, s: str) -> int:
+        if len(s) <= 0: 
+            return 0
+        i = 0
+        cur = 0
+        operation = '+'
+        res = []
+        # USE FOR LOOP!!!!!! NOT WHILE LOOP!!!!!
+        for i in range(len(s)): 
+            # update the current number
+            if s[i] >= '0' and s[i] <= '9': 
+                cur = cur * 10 + int(s[i])
+
+            # meet non-digit
+            # add current number to list based on operation
+            # USE A LIST OF OPERATIONS SO NO NEED TO WORRY ABOUT WHITESPACE!!!!!
+            if (s[i] in ['+', '-', '*', '/']) or (i == len(s)-1): 
+                if operation == '+': 
+                    res.append(cur)
+                elif operation == '-': 
+                    res.append(-cur)
+                elif operation == '*': 
+                    res.append(res.pop() * cur)
+                else: 
+                    res.append(int(res.pop() / cur))
+                cur = 0
+                operation = s[i]
+
+        print(res)
+        return sum(res)
