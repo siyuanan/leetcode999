@@ -34,3 +34,69 @@ class Solution:
 
         print(res)
         return sum(res)
+        
+        
+        
+# source: "facebook" target: "fee" -> 2
+# source: "facebook" target: "BOO" -> 1
+# source: "facebook" target: "coffee kebab" -> 3
+
+dict_source = {}
+dict_target = {}
+
+for c in source.lower(): 
+    if c in dict_source: 
+        dict_source[c] += 1
+    else: 
+        dict_source[c] = 1
+
+for c in target.lower(): 
+    if c in dict_target: 
+        dict_target[c] += 1
+    else: 
+        dict_target[c] = 1
+
+cnt = 0
+for c in dict_target.keys(): 
+    if c not in dict_source: 
+        return -1
+
+    n1 = dict_source[c]
+    n2 = dict_target[c] 
+    n = 0
+    if n2 % n1 == 0: 
+        n = n2 // n1
+    else: 
+        n = n2 // n1 + 1
+    cnt = max(cnt, n)
+
+return cnt
+
+source = 'abcd', dict_source = {'a': 1, 'b': 1, 'c': 1, 'd': 1}
+target = 'aabbbf', dict_target = {'a': 2, 'b': 3, 'f': 1}
+
+
+# [ 1, 0, 2, 0, 0, 3, 4 ] -> [ 1, 4, 3, 2, 0, 0, 0 ]
+ 
+# nums: [ 1, 4, 2, 0, 0, 3, 0 ]
+left = 0 # left = 2
+right = len(nums) - 1 # right = 3
+while left < right: # 0 < 6
+    if nums[left] != 0: # nums[left] = 1
+        left += 1
+    if nums[right] == 0: 
+        right -= 1
+    if num[left] == 0 and nums[right] != 0: 
+        tmp = nums[left]
+        nums[left] = nums[right]
+        nums[right] = tmp
+        left += 1
+        right -= 1
+
+left = 0, right = 6
+nums[left] = 1, left = 1, nums[left] = 0
+nums[right] = 4, nums = [1, 4, 2, 0, 0, 3, 0], left = 2, right = 5
+
+left = 3, right = 5, nums[left] = 0, nums[right] = 3
+nums = [1,4,2,3,0,0,0]
+left = 4, right = 4
