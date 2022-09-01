@@ -448,3 +448,27 @@ class Solution:
             fast += 1
             l = max(fast - slow, l)
         return l
+    
+    # 6. Zigzag Conversion
+    def convert(self, s: str, numRows: int) -> str:
+        if numRows >= len(s) or numRows == 1: 
+            return s
+
+        r = []
+        i = 0
+        while i < numRows: 
+            j = i
+            if i == 0 or i == numRows-1: 
+                while j < len(s): 
+                    r.append(s[j])
+                    j += (numRows-1)*2
+            else: 
+                while j < len(s): 
+                    r.append(s[j])
+                    if j - 2*i + (numRows-1)*2 < len(s): 
+                        r.append(s[j - 2*i + (numRows-1)*2])
+                    j += (numRows-1)*2
+                
+            i += 1
+        
+        return ''.join(r)
