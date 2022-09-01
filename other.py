@@ -431,3 +431,20 @@ class Solution:
             else: 
                 sum_dict[s] = 1
         return cnt
+    
+    # 3. Longest Substring Without Repeating Characters
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if len(s) <= 1: 
+            return len(s)
+        slow = 0
+        fast = 0
+        l = 0
+        chars = set()
+        while fast < len(s): 
+            while s[fast] in chars: 
+                chars.remove(s[slow])
+                slow += 1
+            chars.add(s[fast])
+            fast += 1
+            l = max(fast - slow, l)
+        return l
