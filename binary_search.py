@@ -109,53 +109,43 @@ class Solution:
 
         return arr[left:right+1]
 
-    # 34
+    # 34. Find First and Last Position of Element in Sorted Array
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        def searchFirst(nums, target): 
-            if len(nums) == 0: 
-                return -1
-
-            left = 0
-            right = len(nums) - 1
-            while left < right: 
-                mid = (left + right) // 2
-                if (nums[mid] == target): 
-                    if (mid == 0) | (nums[mid-1] != target): 
-                        return mid
-                if nums[mid] < target: 
-                    left = mid + 1
-                else: 
-                    right = mid - 1
-
-            if nums[left] == target: 
-                return left
-            else: 
-                return -1
-
-        def searchLast(nums, target): 
-            if len(nums) == 0: 
-                return -1
-            left = 0
-            right = len(nums) - 1
-            while left < right: 
-                mid = (left + right) // 2
-                if (nums[mid] == target) & (nums[mid+1] != target): 
-                    return mid
-                if nums[mid] > target: 
-                    right = mid - 1
-                else: 
-                    left = mid + 1
-
-            if nums[left] == target: 
-                return left
-            else: 
-                return -1
-            
-        i = searchFirst(nums, target)
-        if i == -1: 
+        if len(nums) <= 0: 
             return [-1, -1]
-        else: 
-            return [i, searchLast(nums, target)]
+        def findFirst(nums, target): 
+            if len(nums) <= 0: 
+                return -1
+            l = 0
+            r = len(nums) - 1
+            while l <= r: 
+                m = (l + r) // 2
+                if nums[m] == target: 
+                    if m == 0 or nums[m-1] != target: 
+                        return m
+                if nums[m] >= target: 
+                    r = m - 1
+                else: 
+                    l = m + 1
+            return -1
+        
+        def findLast(nums, target): 
+            if len(nums) <= 0: 
+                return -1
+            l = 0
+            r = len(nums) - 1
+            while l <= r: 
+                m = (l + r) // 2
+                if nums[m] == target: 
+                    if m == len(nums)-1 or nums[m+1] != target: 
+                        return m
+                if nums[m] <= target: 
+                    l = m + 1
+                else: 
+                    r = m - 1
+            return -1
+       
+       
 
     # 744
     def nextGreatestLetter(self, letters: List[str], target: str) -> str:      
