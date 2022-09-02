@@ -472,3 +472,20 @@ class Solution:
             i += 1
         
         return ''.join(r)
+    
+    
+    # 49. Group Anagrams
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        # turn each word into a 26 digit string
+        table = {}
+        for w in strs: 
+            k = [0] * 26
+            for c in w: 
+                k[ord(c) - ord('a')] += 1
+            k_str = '-'.join([str(i) for i in k])
+            if k_str in table: 
+                table[k_str].append(w)
+            else: 
+                table[k_str] = [w]
+        # print(table)
+        return [table[k] for k in table]
