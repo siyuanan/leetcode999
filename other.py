@@ -489,3 +489,38 @@ class Solution:
                 table[k_str] = [w]
         # print(table)
         return [table[k] for k in table]
+    
+    
+    # 31. Next Permutation
+    def nextPermutation(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # scan from the last number to the left
+        # find the 1st decreasing number
+        if len(nums) <= 1: 
+            return nums
+        def swap(nums, ii, jj): 
+            tmp = nums[ii]
+            nums[ii] = nums[jj]
+            nums[jj] = tmp
+        
+        i = len(nums) - 2
+        while i >= 0 and nums[i] >= nums[i+1]: 
+            i -= 1
+            
+        # now nums[i] is the number to swap to the right
+        if i >= 0: # find the decreasing number
+            j = i + 1
+            while j < len(nums) and nums[j] > nums[i]: 
+                j += 1
+            swap(nums, i, j - 1)
+        
+        # last rearrange i+1 to len-1
+        # to non-decreasing array
+        i = i + 1
+        j = len(nums) - 1
+        while i < j: 
+            swap(nums, i, j)
+            i += 1
+            j -= 1
