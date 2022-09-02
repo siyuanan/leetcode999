@@ -102,25 +102,18 @@ class Solution:
 
     # 78. Subsets
     def subsets(self, nums: List[int]) -> List[List[int]]:
-    
-        def helper(nums, s, idx, result): 
-            if idx == len(nums): 
-                result.append(s)
-                return
-            # not add the char at idx to s
-            helper(nums, s, idx+1, result)
-            # add the char at idx to s
-            s = s + [nums[idx]]
-            helper(nums, s, idx+1, result)
-            # remove the char at idx before going back to previous level
-            s = s[:len(s)-1]
-            
-        result = []
         if len(nums) <= 0: 
-            return result
-        s = [] # initialize a subset
-        helper(nums, s, 0, result)
-        return result
+            return [[]]
+        def dfs(nums, cur, i, res): 
+            if i == len(nums): 
+                res.append(cur)
+                return 
+            dfs(nums, cur, i + 1, res) # not adding nums[i]
+            dfs(nums, cur + [nums[i]], i + 1, res) # add nums[i]
+        
+        res = []
+        dfs(nums, [], 0, res)
+        return res
     
     # 22. Generate Valid Parentheses
     def generateParenthesis(self, n: int) -> List[str]:
