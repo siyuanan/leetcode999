@@ -206,28 +206,21 @@ class Solution:
 
     # 162. Find Peak Element
     def findPeakElement(self, nums: List[int]) -> int:
-        if len(nums) <= 0:
-            return -1
-        if len(nums) == 1:
+        # linear scan can achieve O(n)
+        # binary search O(logn)
+        if len(nums) == 1: 
             return 0
-        if nums[0] > nums[1]: 
+        if nums[0] > nums[1]:
             return 0
-        if nums[-1] > nums[-2]: 
+        if nums[-1] > nums[-2]:
             return len(nums)-1
         
-        # use linear scan:
-        for i in range(1, len(nums)-1): 
-            if nums[i-1] < nums[i] and nums[i+1] < nums[i]: 
-                return i
-        return -1
-
-	# use binary search
-        left = 0
-        right = len(nums) - 1
-        while left < right: 
-            m = (left + right) // 2
-            if nums[m] > nums[m+1]: 
-                right = m
+        l = 0
+        r = len(nums) - 1
+        while l < r: 
+            m = (l + r) // 2
+            if nums[m] < nums[m+1]: # move left to the larger number
+                l = m + 1
             else: 
-                left = m + 1
-        return left
+                r = m # move right to the larger number
+        return l
