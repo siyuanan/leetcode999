@@ -280,6 +280,32 @@ class Solution:
         dfs(root)
         return d
     
+    # 1522. Diameter of N-Ary Tree
+    def diameter(self, root: 'Node') -> int:
+        """
+        :type root: 'Node'
+        :rtype: int
+        """        
+        d = 0
+        def dfs(node): 
+            nonlocal d
+            if node == None: 
+                return 0
+            # find 2 max path from the children
+            d1 = 0
+            d2 = 0
+            for c in node.children: 
+                d_c = dfs(c)
+                if d1 >= d2 and d_c >= d2: 
+                    d2 = d_c
+                elif d2 >= d1 and d_c >= d1: 
+                    d1 = d_c
+            d = max(d1+d2, d)
+            return max(d1, d2) + 1
+        
+        dfs(root)
+        return d
+    
     # 339. Nested List Weight Sum
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
         def dfs(lst, d): 
