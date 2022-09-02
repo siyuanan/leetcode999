@@ -238,3 +238,27 @@ class Solution:
             head = head.next
         return dummy.next
             
+        
+    # 24. Swap Nodes in Pairs
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head == None: 
+            return None
+        if head.next == None: 
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        prev = dummy
+        
+        while head != None and head.next != None: 
+            n = head.next
+            head.next = n.next
+            n.next = head
+            prev.next = n
+            
+            # prev move to head
+            # NOT p.next
+            # p.next is the original head.next
+            prev = head 
+            head = head.next
+            
+        return dummy.next
