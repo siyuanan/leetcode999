@@ -12,6 +12,7 @@ class Solution:
         operation = '+'
         res = []
         # USE FOR LOOP!!!!!! NOT WHILE LOOP!!!!!
+        # SO NO NEED TO WORRY ABOUT LAST POSITION
         for i in range(len(s)): 
             # update the current number
             if s[i] >= '0' and s[i] <= '9': 
@@ -93,10 +94,23 @@ while left < right: # 0 < 6
         left += 1
         right -= 1
 
-left = 0, right = 6
-nums[left] = 1, left = 1, nums[left] = 0
-nums[right] = 4, nums = [1, 4, 2, 0, 0, 3, 0], left = 2, right = 5
 
-left = 3, right = 5, nums[left] = 0, nums[right] = 3
-nums = [1,4,2,3,0,0,0]
-left = 4, right = 4
+
+# 2. Add Two Numbers
+# ALL LINKED LIST: REMEMBER TO MOVE FORWARD
+def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    dummy = ListNode(-1)
+    over10 = 0
+    cur = dummy
+    while l1 != None or l2 != None or over10 > 0: 
+        n = over10
+        if l1 != None: 
+            n += l1.val
+            l1 = l1.next # MOVE
+        if l2 != None: 
+            n += l2.val
+            l2 = l2.next # MOVE
+        over10 = n // 10
+        cur.next = ListNode(n % 10)
+        cur = cur.next # MOVE
+    return dummy.next
