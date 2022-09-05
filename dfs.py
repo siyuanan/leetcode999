@@ -72,6 +72,7 @@ class Solution:
             return d
         
         # move the lower node the same level with high node
+        # then go up together if not equal
         def merge(low, high, diff): 
             while diff > 0: 
                 low = low.parent
