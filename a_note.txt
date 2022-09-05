@@ -114,3 +114,23 @@ def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optio
         cur.next = ListNode(n % 10)
         cur = cur.next # MOVE
     return dummy.next
+    
+    
+# 408. Valid Word Abbreviation
+def validWordAbbreviation(self, word: str, abbr: str) -> bool:
+    w = 0
+    a = 0
+    while w < len(word) and a < len(abbr): 
+        # CHECK CHARS FIRST TO INCLUDE LEDING 0s
+        if abbr[a] <= '0' or abbr[a] > '9': 
+            if word[w] != abbr[a]: 
+                return False
+            a += 1
+            w += 1
+        else: 
+            cnt = 0
+            while a < len(abbr) and abbr[a] >= '0' and abbr[a] <= '9': 
+                cnt = cnt * 10 + int(abbr[a])
+                a += 1 # REMEMBER TO INCREASE A
+            w += cnt 
+        return w == len(word) and a == len(abbr) # NOT RETURN TRUE BUT RETURN W AND A EQUAL LENGTHS
