@@ -21,6 +21,7 @@ class Solution:
             # meet non-digit
             # add current number to list based on operation
             # USE A LIST OF OPERATIONS SO NO NEED TO WORRY ABOUT WHITESPACE!!!!!
+            # USE IF HERE NOT ELIF, IN CASE THE LAST CHAR IS A NUMBER
             if (s[i] in ['+', '-', '*', '/']) or (i == len(s)-1): 
                 if operation == '+': 
                     res.append(cur)
