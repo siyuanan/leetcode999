@@ -524,3 +524,17 @@ class Solution:
             swap(nums, i, j)
             i += 1
             j -= 1
+            
+    # 56. Merge Intervals
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        # sort
+        intervals.sort(key = lambda x: x[0])
+        # merge
+        res = []
+        for i in intervals: 
+            if len(res) == 0 or i[0] > res[-1][1]: 
+                res.append(i)
+            else: 
+                j = res.pop()
+                res.append([min(j[0], i[0]), max(j[1], i[1])])
+        return res
