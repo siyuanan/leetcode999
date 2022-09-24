@@ -262,3 +262,63 @@ class Solution:
             head = head.next
             
         return dummy.next
+    
+# 146. LRU Cache
+class ListNode: 
+    def __init__(self, key, value): 
+        self.key = key
+        self.val = value
+        self.prev = None
+        self.next = None
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.cap = capacity
+        self.size = 0
+        self.cache = {}
+        self.head = ListNode(-1, -1)
+        self.tail = ListNode(-1, -1)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def _move_to_head(self, node): 
+        # break current link
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        self.size -= 1
+        # insert after head
+        self._add_node(node)
+               
+    def _add_node(self, node):
+        # insert after head
+        node.next = self.head.next
+        self.head.next = node
+        node.next.prev = node
+        node.prev = self.head
+        self.size += 1
+        self.cache[node.key] = node
+    
+    def _pop_tail(self): 
+        self.cache.pop(self.tail.prev.key)
+        self.tail.prev.prev.next = self.tail
+        self.tail.prev = self.tail.prev.prev
+        self.size -= 1
+        
+    def get(self, key: int) -> int:
+        if key in self.cache: 
+            node = self.cache[key]
+            self._move_to_head(node)
+            return node.val
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache: 
+            node = self.cache[key]
+            node.val = value
+            self._move_to_head(node)
+        else: 
+            node = ListNode(key = key, value = value)
+            self._add_node(node)
+            if self.size > self.cap: 
+                self._pop_tail()
+
