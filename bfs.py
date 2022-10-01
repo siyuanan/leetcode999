@@ -115,5 +115,33 @@ class Solution:
             if node.right != None: 
                 q.append((node.right, num*10 + node.val))
         return s
+    
+    # 787. Cheapest Flights Within K Stops
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # table[from][to] = price
+        table = [[0 for _ in range(n)] for _ in range(n)]
+        for f in flights: 
+            table[f[0]][f[1]] = f[2]
+            
+        visited = {src: 0}
+        q = collections.deque()
+        q.append((src, 0))
+        stop = 0
+        
+        while q and stop <= k: 
+            s = len(q)
+            for i in range(s): 
+                city, cost = q.popleft()
+                for j in range(n): 
+                    if table[city][j] > 0: 
+                        cost1 = cost + table[city][j]
+                        if (j not in visited) or (visited[j] > cost1): 
+                            q.append((j, cost1))
+                            visited[j] = cost1
+            stop += 1
+            
+        if dst not in visited: 
+            return -1
+        return visited[dst]
             
 
