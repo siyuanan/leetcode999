@@ -210,8 +210,7 @@ class Solution:
                         i = j1
                     else: 
                         i = len(lst)
-                    
-        
+
         res = []
         for n in num_dict: 
             if len(res) < k: 
@@ -222,6 +221,80 @@ class Solution:
                     res[0] = n
                     percolateDown(res, 0, num_dict)
         return res
+    
+    # 23. Merge k Sorted Lists
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if len(lists) == 0: 
+            return None
+        if len(lists) == 1: 
+            return lists[0]
+        
+        def swap(q, i, j): 
+            tmp = q[i]
+            q[i] = q[j]
+            q[j] = tmp
+            
+        def percolateUp(q, i): 
+            # i small, i move up
+            while i > 0: 
+                j = (i - 1) // 2
+                if q[i].val < q[j].val: 
+                    swap(q, i, j)
+                    i = j
+                else: 
+                    break
+                    
+        def percolateDown(q, i): 
+            # i large, i move down
+            while i < len(q) // 2:
+                j1 = i * 2 + 1
+                j2 = i * 2 + 2
+                if j2 < len(q): # both children exist
+                    if q[i].val > q[j1].val or q[i].val > q[j2].val:  # swap
+                        if q[j1].val > q[j2].val: 
+                            swap(q, i, j2)
+                            i = j2
+                        else: 
+                            swap(q, i, j1)
+                            i = j1
+                    else: 
+                        break
+                else: # only j1
+                    if q[i].val > q[j1].val: 
+                        swap(q, i, j1)
+                        i = j1
+                    else: 
+                        break
+
+        dummy = ListNode()
+        cur = dummy
+        # use min heap with k elements to store nodes
+        q = []
+        for l in lists: 
+            if l != None: 
+                q.append(l)
+                percolateUp(q, len(q)-1)
+        
+        if len(q) == 0: 
+            return None
+        if len(q) == 1: 
+            return q[0]
+        
+        while len(q) > 1: 
+            node = q[0]
+            next_node = node.next
+            if next_node == None: # this list is finished
+                next_node = q.pop()
+            q[0] = next_node
+            percolateDown(q, 0)
+            cur.next = node
+            cur = cur.next
+            
+        cur.next = q[0]
+        return dummy.next
+                
+        
+        
                 
                 
                 
