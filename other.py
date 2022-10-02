@@ -539,7 +539,7 @@ class Solution:
                 res.append([min(j[0], i[0]), max(j[1], i[1])])
         return res
     
-    # https://leetcode.com/problems/string-without-aaa-or-bbb/submissions/ NOT SUBMITTED YET
+    # 984. String Without AAA or BBB
     def strWithout3a3b(self, a: int, b: int) -> str:
         def cut(large, small, c1, c2): 
             # cut large with small
