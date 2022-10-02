@@ -538,3 +538,27 @@ class Solution:
                 j = res.pop()
                 res.append([min(j[0], i[0]), max(j[1], i[1])])
         return res
+    
+    # https://leetcode.com/problems/string-without-aaa-or-bbb/submissions/ NOT SUBMITTED YET
+    def strWithout3a3b(self, a: int, b: int) -> str:
+        def cut(large, small, c1, c2): 
+            # cut large with small
+            # how many spot 
+            spot = (large - 1) // 2
+            if small < spot: 
+                print(f'{small} too small')
+                return ''
+            
+            n1 = min(small - spot, spot) # how many c2c2 in spot
+            n2 = spot - n1 # how many c2 in remaining spot
+            res = (c1*2 + c2*2) * n1 + (c1*2 + c2) * n2 
+            res += c1 * (large - 2 * spot)
+            # if still c2 available
+            if small > spot * 2: 
+                res += c2 * (small - spot * 2)
+            return res
+        
+        if a > b: 
+            return cut(a, b, 'a', 'b')
+        else: 
+            return cut(b, a, 'b', 'a')
