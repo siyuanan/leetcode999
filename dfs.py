@@ -487,3 +487,21 @@ class Solution:
 
         dfs(root, 0)
         return s
+    
+    # 112. Path Sum
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if root == None: 
+            return False
+        def dfs (node, pre_sum, targetSum): 
+            if node.left == None and node.right == None: 
+                return pre_sum + node.val == targetSum
+            left = False
+            right = False
+            if node.left != None: 
+                left = dfs(node.left, pre_sum + node.val, targetSum)
+            if node.right != None: 
+                right = dfs(node.right, pre_sum + node.val, targetSum)
+                
+            return left or right
+        
+        return dfs(root, 0, targetSum)
