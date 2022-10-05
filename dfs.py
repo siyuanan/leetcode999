@@ -505,3 +505,23 @@ class Solution:
             return left or right
         
         return dfs(root, 0, targetSum)
+    
+    # 113. Path Sum II
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        res = []
+        if root == None: 
+            return res
+        
+        def dfs(node, pre_sum): 
+            nonlocal res
+            if node.left == None and node.right == None: 
+                if sum(pre_sum) + node.val == targetSum: 
+                    res.append(pre_sum + [node.val])
+                return
+            if node.left != None: 
+                dfs(node.left, pre_sum + [node.val])
+            if node.right != None: 
+                dfs(node.right, pre_sum + [node.val])
+                
+        dfs(root, [])
+        return res
