@@ -562,3 +562,23 @@ class Solution:
             return cut(a, b, 'a', 'b')
         else: 
             return cut(b, a, 'b', 'a')
+        
+    # 43. Multiply Strings
+    def multiply1(self, num1: str, num2: str) -> str:
+        res = 0
+        for i in range(1, len(num1) + 1): 
+            d1 = int(num1[-i])
+            for j in range(1, len(num2) + 1): 
+                d2 = int(num2[-j])
+                res += d1 * d2 * 10 **(i + j - 2)
+        return str(res)
+
+    def multiply2(self, num1: str, num2: str) -> str:
+        n1 = 0
+        n2 = 0
+        for d in num1: 
+            n1 = n1 * 10 + int(d)
+        for d in num2: 
+            n2 = n2 * 10 + int(d)
+            
+        return str(n1 * n2)
