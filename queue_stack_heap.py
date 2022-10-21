@@ -292,6 +292,75 @@ class Solution:
             
         cur.next = q[0]
         return dummy.next
+    
+    # 692. Top K Frequent Words
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        table = {}
+        for w in words: 
+            if w in table: 
+                table[w] += 1
+            else: 
+                table[w] = 1
+                
+        
+        def lessThan(w1, w2, table): # return w1 < w2
+            return (table[w1] < table[w2]) or (table[w1] == table[w2] and w2 < w1)
+        
+        def swap(res, i, j): 
+            tmp = res[i]
+            res[i] = res[j]
+            res[j] = tmp
+        
+        def percolateUp(res, i): 
+            while i > 0: 
+                j = (i - 1) // 2
+                if lessThan(res[i], res[j], table): 
+                    swap(res, i, j)
+                    i = j
+                else: 
+                    break
+                    
+        def percolateDown(res, i): 
+            while i * 2 + 1 < len(res): 
+                j1 = i * 2 + 1
+                j2 = i * 2 + 2
+                if j2 >= len(res): # only 1 child
+                    if lessThan(res[j1], res[i], table): 
+                        swap(res, i, j1)
+                        i = j1
+                    else: 
+                        i = len(res)
+                else: # 2 children
+                    if lessThan(res[j1], res[i], table) or lessThan(res[j2], res[i], table): 
+                        if lessThan(res[j1], res[j2], table): 
+                            swap(res, i, j1)
+                            i = j1
+                        else: 
+                            swap(res, i, j2)
+                            i = j2
+                    else: 
+                        i = len(res)
+                        
+        res = []
+        for w in table: 
+            if len(res) < k: 
+                res.append(w)
+                percolateUp(res, len(res) - 1)
+            else: 
+                if lessThan(res[0], w, table): 
+                    res[0] = w
+                    percolateDown(res, 0)
+                else: 
+                    continue
+        
+        final_res = []
+        while len(res) > 1: 
+            final_res.append(res[0])
+            res[0] = res.pop()
+            percolateDown(res, 0)
+        final_res.append(res[0])
+        
+        return final_res[::-1]
                 
         
         
